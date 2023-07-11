@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.springmvc.domain.Book;
 import com.springmvc.repository.BookRepository;
+import com.springmvc.repository.BookRepositoryImpl;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -17,6 +18,12 @@ public class BookServiceImpl implements BookService {
 	public List<Book> getAllBookList(){
 		return bookRepository.getAllBookList();
 	
+	}
+
+	@Override
+	public List<Book> getBookListByCategory(String category) {
+		List<Book> booksByCategory = bookRepository.getBookListByCategory(category);
+		return booksByCategory;
 	}
 }
 

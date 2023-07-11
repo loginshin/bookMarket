@@ -9,5 +9,6 @@ import com.springmvc.domain.Book;
 public interface BookRepository {
 	//북데이터가 담긴 리스트를 꼭 호출해야한다.
 	List<Book> getAllBookList();
+	List<Book> getBookListByCategory(String category);
 
 }

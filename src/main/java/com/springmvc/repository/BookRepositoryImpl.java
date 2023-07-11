@@ -54,5 +54,21 @@ import com.springmvc.domain.Book;
 		return listOfBooks;
 	}
 
+
+	//책을 순차적으로 카테고리를 검사해서 맞다면 카테고리에 그 책을 추가한다.
+	@Override
+	public List<Book> getBookListByCategory(String category) {
+		List<Book> booksByCategory = new ArrayList<Book>();
+		for (int i = 0; i < listOfBooks.size(); i++) {
+			Book book = listOfBooks.get(i);
+			if ( category.equalsIgnoreCase(book.getCategory())) {
+				booksByCategory.add(book);
+			}
+				
+		}
+		
+		return booksByCategory;
+	}
+
 	}
 
