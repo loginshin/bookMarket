@@ -27,6 +27,7 @@
       <footer class="container"> 
         <hr>
         <p>&copy; WebMarket</p>
+        <a href="http://localhost:8080/BookMarket/books">Books페이지 이동</a>
     </footer> 
 </body>
 
