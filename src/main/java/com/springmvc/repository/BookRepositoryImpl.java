@@ -48,12 +48,10 @@ import com.springmvc.domain.Book;
 	   }
 	    
 	    
-	    
-	    
 	@Override
 	public List<Book> getAllBookList() {
-		// TODO Auto-generated method stub
-		return null;
+		// 함수 사용시 리스트 전달 도메인 객체가 사용한다.
+		return listOfBooks;
 	}
 
 	}

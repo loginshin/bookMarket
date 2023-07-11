@@ -3,6 +3,7 @@ package com.springmvc.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.springmvc.domain.Book;
 import com.springmvc.service.BookService;
 
+
+@Controller // 컨트롤러임을 나타내야한다.
 public class BookController {
 	
 	@Autowired
@@ -22,8 +25,4 @@ public class BookController {
 		model.addAttribute("bookList", list); //모델에 추가한다.
 		return "books";
 	}
-		
-	
-	
-	
 }
