@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.springmvc.domain.Book;
 import com.springmvc.repository.BookRepository;
-import com.springmvc.repository.BookRepositoryImpl;
 
 @Service
 public class BookServiceImpl implements BookService {
