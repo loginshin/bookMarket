@@ -21,8 +21,6 @@ import com.springmvc.service.BookService;
 @Controller // 컨트롤러임을 나타내야한다.
 @RequestMapping("/books")
 public class BookController {
-	
-	
 	@Autowired
 	private BookService bookService;
 	
@@ -68,10 +66,9 @@ public class BookController {
     }
 	
 	@GetMapping("/book")
-	public String requsetBookById(@RequestParam("id") String  bookId,Model model) {
+	public String requsetBookById(@RequestParam("id") String bookId, Model model) {
 		Book bookById = bookService.getBookById(bookId);
-		model.addAttribute("Book", bookById);
-		
+		model.addAttribute("book", bookById); // 그 id값에 맞는 책의 객체가 들어있다.
 		return "book";
 	}
 	
