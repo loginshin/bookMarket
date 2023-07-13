@@ -109,8 +109,28 @@ public class BookRepositoryImpl implements BookRepository {
        }
 		// booksByCategory 객체에 등록된 도서와 booksByPublisher에 등록된
         // 도서 목록 중 중복되는 도서만 남기고 나머지는 삭제한 후 booksByCategory 객체로 반환합니다.
+        // 공통 요소만 남기고 나머지값 제거.
         booksByCategory.retainAll(booksByPublisher);
         return booksByCategory;
+	}
+	
+	
+	@Override
+	public Book getBookById(String bookId) {
+		Book bookInfo = null;
+		for ( int i = 0 ; i< listOfBooks.size(); i++) {
+			Book book = listOfBooks.get(i);
+			// 책을 순서대로 가지고와서 책이 있고 가져온 책의 정보가 dto에 있다면 bookInfo에 책을 집어넣는다.
+			if (book != null && book.getBookId() !=null && book.getBookId().equals(bookId)) {
+				bookInfo = book;
+				break;
+			}
+		}
+		if ( bookInfo == null) {
+			throw new IllegalArgumentException("도서ID가 " + bookId + "인 해당 도서를 찾을 수 없습니다.");
+		}
+		
+		return bookInfo;
 	}
 
 }
