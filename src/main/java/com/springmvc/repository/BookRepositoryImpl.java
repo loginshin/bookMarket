@@ -78,15 +78,16 @@ public class BookRepositoryImpl implements BookRepository {
 		
 		Set<Book> booksByPublisher = new HashSet<Book>();
 		Set<Book> booksByCategory = new HashSet<Book>();
-		Set<String> booksByFilter = filter.keySet();
+		Set<String> booksByFilter = filter.keySet(); //키값들을 전부 집어넣는다.
 
 		
 		//1)매트릭스 변수 중 publisher를 포함하는 경우에 실행됩니다.
 		//  전체 도서 목록 중에서 publisher 필드 값과 일치하는 도서를 검색하여
 		//  booksByPublisher 객체에 등록합니다.
-		if (booksByFilter.contains("publisher")) {
-			for (int j = 0; j < filter.get("publisher").size(); j++) {
+		if (booksByFilter.contains("publisher")) { 
+			for (int j = 0; j < filter.get("publisher").size(); j++) { // 
 				String publisherName = filter.get("publisher").get(j);
+				System.out.println(publisherName); // 출판사 이름 출력
 				for (int i = 0; i < listOfBooks.size(); i++) {
 					Book book = listOfBooks.get(i);
 

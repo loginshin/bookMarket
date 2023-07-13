@@ -1,11 +1,14 @@
 package com.springmvc.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -52,5 +55,17 @@ public class BookController {
 		model.addAttribute("bookList", booksByCategory);
 		return "books";
 	}
+	
+	@GetMapping("/filter/{bookFilter}")
+    public String requestBooksByFilter(
+    @MatrixVariable(pathVar="bookFilter") Map<String, List<String>> bookFilter, Model model) {
+        System.out.println("bookFilter 컨트롤러 접근");
+		Set<Book> booksByFilter = bookService.getBookListByFilter(bookFilter);
+		System.out.println("전달할 필터 : " + booksByFilter);
+        model.addAttribute("bookList", booksByFilter); // model로 전달
+        return "books";
+    }
+	
+	
 	
 }
