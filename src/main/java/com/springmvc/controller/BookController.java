@@ -7,7 +7,9 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -72,17 +74,31 @@ public class BookController {
 		model.addAttribute("book", bookById); // 그 id값에 맞는 책의 객체가 들어있다.
 		return "book";
 	}
-	
-	//modelAttribute 객체명 NewBook으로 보낸다.
+
+	// modelAttribute 객체명 NewBook으로 보낸다.
 	@GetMapping("/add")
 	public String requestAddBookForm(@ModelAttribute("NewBook") Book book) {
 		return "addBook";
 	}
-	
+
+	// RequestMapping, GetMapping 과 똑같은 역할을한다. 단디 GetMapping을 더 많이 사용
+	// 등록을 하면 bookService 의 setNewBook메서드를 호출해 등록하고 books 페이지로 돌아간다.
 	@PostMapping("/add")
 	public String submitAddNewBook(@ModelAttribute("NewBook") Book book) {
 		bookService.setNewBook(book);
 		return "redirect:/books";
+	}
+
+	@ModelAttribute
+	public void addAttributes(Model model) {
+		model.addAttribute("addTitle", "신규 도서 등록");
+	}
+
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.setAllowedFields("bookId", "name", "unitPrice", "author", "description", "publisher", "category",
+				"unitsInStock", "totalPages", "releaseDate", "condition");
+		
 	}
 
 }
