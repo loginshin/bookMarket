@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+               http://www.springframework.org/schema/beans/spring-beans.xsd
+               http://www.springframework.org/schema/security
+               http://www.springframework.org/schema/security/spring-security.xsd">
+
+
+
+	<!-- 시큐리티 태그로 접근 권한을 설정합니다. -->
+	<http use-expressions="true">
+		<!-- ROLE_ADMIN 권한을 가진 사용자만 /books/add에 접근할 수 있습니다. -->
+		<intercept-url pattern="/books/add"
+			access="hasAuthority('ROLE_ADMIN')" />
+			<!-- 로그인 경로, 인증 성공,실패 경로, 사용자 계정이름,비밀번호 -->
+		<form-login login-page="/login"
+			default-target-url="/books/add"
+			authentication-failure-url="/loginfailed"
+			username-parameter="username"
+			password-parameter="password" />
+		<form-login />
+		<csrf />
+		 <logout logout-success-url="/logout"/>
+	</http>
+	<!-- 시큐리티 태그로 사용자 권한 설정 -->
+	<authentication-manager>
+		<authentication-provider>
+			<user-service>
+				<!-- 사용자 이름으 Admin,비밀번호는 Admin1234인 ROLE_ADMIN권한을 정의 -->
+				<user name="Admin" password="{noop}Admin1234"
+					authorities="ROLE_ADMIN" />
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+</beans:beans>
