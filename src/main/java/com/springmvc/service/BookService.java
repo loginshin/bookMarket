@@ -10,4 +10,7 @@ public interface BookService {
 	List<Book> getBookListByCategory(String category);
 	Set<Book> getBookListByFilter(Map<String ,List<String>> filter);
 	Book getBookById(String bookId);
+	
+	// 클라이언트가 전달한 책 등록 값들을 BookRepository에 전달해 책 추가하기
+	void setNewBook(Book book);
 }

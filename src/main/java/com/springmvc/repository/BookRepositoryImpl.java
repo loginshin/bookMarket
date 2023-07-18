@@ -133,4 +133,11 @@ public class BookRepositoryImpl implements BookRepository {
 		return bookInfo;
 	}
 
+	// 책 추가하기
+	@Override
+	public void setNewBook(Book book) {
+		listOfBooks.add(book);
+		
+	}
+
 }

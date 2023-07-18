@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.MatrixVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -70,9 +72,17 @@ public class BookController {
 		model.addAttribute("book", bookById); // 그 id값에 맞는 책의 객체가 들어있다.
 		return "book";
 	}
+	
+	//modelAttribute 객체명 NewBook으로 보낸다.
 	@GetMapping("/add")
-	public String requestAddBookForm(Book book) {
+	public String requestAddBookForm(@ModelAttribute("NewBook") Book book) {
 		return "addBook";
+	}
+	
+	@PostMapping("/add")
+	public String submitAddNewBook(@ModelAttribute("NewBook") Book book) {
+		bookService.setNewBook(book);
+		return "redirect:/books";
 	}
 
 }

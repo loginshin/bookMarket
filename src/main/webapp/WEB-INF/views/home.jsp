@@ -23,11 +23,12 @@
         <div class="text-center">
             <h3>${strapline}</h3>
         </div>
-    </div> 
+    </div>
       <footer class="container"> 
         <hr>
         <p>&copy; WebMarket</p>
-        <a href="http://localhost:8080/BookMarket/books">Books페이지 이동</a>
+        <a href="http://localhost:8080/BookMarket/books">Books 페이지 이동</a>
+        <a href="http://localhost:8080/BookMarket/books/add">add 페이지 이동</a>
     </footer> 
 </body>
 
