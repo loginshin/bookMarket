@@ -17,60 +17,62 @@ import org.springframework.web.servlet.ModelAndView;
 import com.springmvc.domain.Book;
 import com.springmvc.service.BookService;
 
-
 @Controller // 컨트롤러임을 나타내야한다.
 @RequestMapping("/books")
 public class BookController {
 	@Autowired
 	private BookService bookService;
-	
+
 	// /books로 요청을 받으면 아래 컨트롤러를 작동시킨다. (GET 방식)
 	@GetMapping
 	public String requestBookList(Model model) {
 		System.out.println("bookController 접근 완료");
-		List<Book> list = bookService.getAllBookList(); //모든 책 객체를 리스트에 클래스 형식으로 담는다
-		model.addAttribute("bookList", list); //모델에 추가한다.
+		List<Book> list = bookService.getAllBookList(); // 모든 책 객체를 리스트에 클래스 형식으로 담는다
+		model.addAttribute("bookList", list); // 모델에 추가한다.
 		System.out.println("books.jsp로 이동합니다");
 		return "books";
 	}
-		
+
 	//
-	@GetMapping(value="all")
+	@GetMapping(value = "all")
 	public ModelAndView requestAllBook() {
-		ModelAndView modelAndView = new ModelAndView(); //ModelAndView클래스의 modelAndView 인스턴스를 생성합니다.
+		ModelAndView modelAndView = new ModelAndView(); // ModelAndView클래스의 modelAndView 인스턴스를 생성합니다.
 		List<Book> list = bookService.getAllBookList(); // 도서 목록을 가져와 저장된 list 값을 모델 속성 bookList에 저장합니다.
-		modelAndView.addObject("bookList", list);		//뷰 이름을 books로 설정하여 books.jsp 파일을 출력합니다.
-		modelAndView.setViewName("books");				//ModelAndVIew 클래스의 modelAndView 인스턴스를 반환합니다.
-		
+		modelAndView.addObject("bookList", list); // 뷰 이름을 books로 설정하여 books.jsp 파일을 출력합니다.
+		modelAndView.setViewName("books"); // ModelAndVIew 클래스의 modelAndView 인스턴스를 반환합니다.
+
 		return modelAndView;
 	}
-	
+
 	@GetMapping("/{category}")
-	public String requestBooksByCategory(@PathVariable("category") String bookCategory,
-			Model model) {
-		System.out.println("카테고리 값은 :" + bookCategory );
+	public String requestBooksByCategory(@PathVariable("category") String bookCategory, Model model) {
+		System.out.println("카테고리 값은 :" + bookCategory);
 		List<Book> booksByCategory = bookService.getBookListByCategory(bookCategory);
-		
+
 		model.addAttribute("bookList", booksByCategory);
 		return "books";
 	}
-	
+
 	@GetMapping("/filter/{bookFilter}")
-    public String requestBooksByFilter(
-    @MatrixVariable(pathVar="bookFilter") Map<String, List<String>> bookFilter, Model model) {
-        System.out.println("bookFilter 컨트롤러 접근");
+	public String requestBooksByFilter(@MatrixVariable(pathVar = "bookFilter") Map<String, List<String>> bookFilter,
+			Model model) {
+		System.out.println("bookFilter 컨트롤러 접근");
 		Set<Book> booksByFilter = bookService.getBookListByFilter(bookFilter);
 		System.out.println("전달할 필터 : " + booksByFilter);
-        model.addAttribute("bookList", booksByFilter); // model로 전달
-        return "books";
-    }
-	
+		model.addAttribute("bookList", booksByFilter); // model로 전달
+		return "books";
+	}
+
+	//
 	@GetMapping("/book")
 	public String requsetBookById(@RequestParam("id") String bookId, Model model) {
 		Book bookById = bookService.getBookById(bookId);
 		model.addAttribute("book", bookById); // 그 id값에 맞는 책의 객체가 들어있다.
 		return "book";
 	}
-	
-	
+	@GetMapping("/add")
+	public String requestAddBookForm(Book book) {
+		return "addBook";
+	}
+
 }
