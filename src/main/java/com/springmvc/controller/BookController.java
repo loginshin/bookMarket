@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.springmvc.domain.Book;
 import com.springmvc.service.BookService;
 
+// 나는 2번 개발했습니다.
 @Controller // 컨트롤러임을 나타내야한다.
 @RequestMapping("/books")
 public class BookController {
