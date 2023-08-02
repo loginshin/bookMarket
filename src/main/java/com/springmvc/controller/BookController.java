@@ -21,37 +21,39 @@ import org.springframework.web.servlet.ModelAndView;
 import com.springmvc.domain.Book;
 import com.springmvc.service.BookService;
 
-// ³ª´Â 2¹ø °³¹ßÇß½À´Ï´Ù.
-@Controller // ÄÁÆ®·Ñ·¯ÀÓÀ» ³ªÅ¸³»¾ßÇÑ´Ù.
+
+// ë‚˜ëŠ” 1,2ë²ˆ ê°œë°œí–ˆìŠµë‹ˆë‹¤.
+
+@Controller // ì»¨íŠ¸ë¡¤ëŸ¬ì„ì„ ë‚˜íƒ€ë‚´ì•¼í•œë‹¤.
 @RequestMapping("/books")
 public class BookController {
 	@Autowired
 	private BookService bookService;
 
-	// /books·Î ¿äÃ»À» ¹ŞÀ¸¸é ¾Æ·¡ ÄÁÆ®·Ñ·¯¸¦ ÀÛµ¿½ÃÅ²´Ù. (GET ¹æ½Ä)
+	// /booksë¡œ ìš”ì²­ì„ ë°›ìœ¼ë©´ ì•„ë˜ ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ ì‘ë™ì‹œí‚¨ë‹¤. (GET ë°©ì‹)
 	@GetMapping
 	public String requestBookList(Model model) {
-		System.out.println("bookController Á¢±Ù ¿Ï·á");
-		List<Book> list = bookService.getAllBookList(); // ¸ğµç Ã¥ °´Ã¼¸¦ ¸®½ºÆ®¿¡ Å¬·¡½º Çü½ÄÀ¸·Î ´ã´Â´Ù
-		model.addAttribute("bookList", list); // ¸ğµ¨¿¡ Ãß°¡ÇÑ´Ù.
-		System.out.println("books.jsp·Î ÀÌµ¿ÇÕ´Ï´Ù");
+		System.out.println("bookController ì ‘ê·¼ ì™„ë£Œ");
+		List<Book> list = bookService.getAllBookList(); // ëª¨ë“  ì±… ê°ì²´ë¥¼ ë¦¬ìŠ¤íŠ¸ì— í´ë˜ìŠ¤ í˜•ì‹ìœ¼ë¡œ ë‹´ëŠ”ë‹¤
+		model.addAttribute("bookList", list); // ëª¨ë¸ì— ì¶”ê°€í•œë‹¤.
+		System.out.println("books.jspë¡œ ì´ë™í•©ë‹ˆë‹¤");
 		return "books";
 	}
 
 	//
 	@GetMapping(value = "all")
 	public ModelAndView requestAllBook() {
-		ModelAndView modelAndView = new ModelAndView(); // ModelAndViewÅ¬·¡½ºÀÇ modelAndView ÀÎ½ºÅÏ½º¸¦ »ı¼ºÇÕ´Ï´Ù.
-		List<Book> list = bookService.getAllBookList(); // µµ¼­ ¸ñ·ÏÀ» °¡Á®¿Í ÀúÀåµÈ list °ªÀ» ¸ğµ¨ ¼Ó¼º bookList¿¡ ÀúÀåÇÕ´Ï´Ù.
-		modelAndView.addObject("bookList", list); // ºä ÀÌ¸§À» books·Î ¼³Á¤ÇÏ¿© books.jsp ÆÄÀÏÀ» Ãâ·ÂÇÕ´Ï´Ù.
-		modelAndView.setViewName("books"); // ModelAndVIew Å¬·¡½ºÀÇ modelAndView ÀÎ½ºÅÏ½º¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+		ModelAndView modelAndView = new ModelAndView(); // ModelAndViewí´ë˜ìŠ¤ì˜ modelAndView ì¸ìŠ¤í„´ìŠ¤ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+		List<Book> list = bookService.getAllBookList(); // ë„ì„œ ëª©ë¡ì„ ê°€ì ¸ì™€ ì €ì¥ëœ list ê°’ì„ ëª¨ë¸ ì†ì„± bookListì— ì €ì¥í•©ë‹ˆë‹¤.
+		modelAndView.addObject("bookList", list); // ë·° ì´ë¦„ì„ booksë¡œ ì„¤ì •í•˜ì—¬ books.jsp íŒŒì¼ì„ ì¶œë ¥í•©ë‹ˆë‹¤.
+		modelAndView.setViewName("books"); // ModelAndVIew í´ë˜ìŠ¤ì˜ modelAndView ì¸ìŠ¤í„´ìŠ¤ë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
 
 		return modelAndView;
 	}
 
 	@GetMapping("/{category}")
 	public String requestBooksByCategory(@PathVariable("category") String bookCategory, Model model) {
-		System.out.println("Ä«Å×°í¸® °ªÀº :" + bookCategory);
+		System.out.println("ì¹´í…Œê³ ë¦¬ ê°’ì€ :" + bookCategory);
 		List<Book> booksByCategory = bookService.getBookListByCategory(bookCategory);
 
 		model.addAttribute("bookList", booksByCategory);
@@ -61,10 +63,10 @@ public class BookController {
 	@GetMapping("/filter/{bookFilter}")
 	public String requestBooksByFilter(@MatrixVariable(pathVar = "bookFilter") Map<String, List<String>> bookFilter,
 			Model model) {
-		System.out.println("bookFilter ÄÁÆ®·Ñ·¯ Á¢±Ù");
+		System.out.println("bookFilter ì»¨íŠ¸ë¡¤ëŸ¬ ì ‘ê·¼");
 		Set<Book> booksByFilter = bookService.getBookListByFilter(bookFilter);
-		System.out.println("Àü´ŞÇÒ ÇÊÅÍ : " + booksByFilter);
-		model.addAttribute("bookList", booksByFilter); // model·Î Àü´Ş
+		System.out.println("ì „ë‹¬í•  í•„í„° : " + booksByFilter);
+		model.addAttribute("bookList", booksByFilter); // modelë¡œ ì „ë‹¬
 		return "books";
 	}
 
@@ -72,18 +74,18 @@ public class BookController {
 	@GetMapping("/book")
 	public String requsetBookById(@RequestParam("id") String bookId, Model model) {
 		Book bookById = bookService.getBookById(bookId);
-		model.addAttribute("book", bookById); // ±× id°ª¿¡ ¸Â´Â Ã¥ÀÇ °´Ã¼°¡ µé¾îÀÖ´Ù.
+		model.addAttribute("book", bookById); // ê·¸ idê°’ì— ë§ëŠ” ì±…ì˜ ê°ì²´ê°€ ë“¤ì–´ìˆë‹¤.
 		return "book";
 	}
 
-	// modelAttribute °´Ã¼¸í NewBookÀ¸·Î º¸³½´Ù.
+	// modelAttribute ê°ì²´ëª… NewBookìœ¼ë¡œ ë³´ë‚¸ë‹¤.
 	@GetMapping("/add")
 	public String requestAddBookForm(@ModelAttribute("NewBook") Book book) {
 		return "addBook";
 	}
 
-	// RequestMapping, GetMapping °ú ¶È°°Àº ¿ªÇÒÀ»ÇÑ´Ù. ´Üµğ GetMappingÀ» ´õ ¸¹ÀÌ »ç¿ë
-	// µî·ÏÀ» ÇÏ¸é bookService ÀÇ setNewBook¸Ş¼­µå¸¦ È£ÃâÇØ µî·ÏÇÏ°í books ÆäÀÌÁö·Î µ¹¾Æ°£´Ù.
+	// RequestMapping, GetMapping ê³¼ ë˜‘ê°™ì€ ì—­í• ì„í•œë‹¤. ë‹¨ë”” GetMappingì„ ë” ë§ì´ ì‚¬ìš©
+	// ë“±ë¡ì„ í•˜ë©´ bookService ì˜ setNewBookë©”ì„œë“œë¥¼ í˜¸ì¶œí•´ ë“±ë¡í•˜ê³  books í˜ì´ì§€ë¡œ ëŒì•„ê°„ë‹¤.
 	@PostMapping("/add")
 	public String submitAddNewBook(@ModelAttribute("NewBook") Book book) {
 		bookService.setNewBook(book);
@@ -92,7 +94,7 @@ public class BookController {
 
 	@ModelAttribute
 	public void addAttributes(Model model) {
-		model.addAttribute("addTitle", "½Å±Ô µµ¼­ µî·Ï");
+		model.addAttribute("addTitle", "ì‹ ê·œ ë„ì„œ ë“±ë¡");
 	}
 
 	@InitBinder
